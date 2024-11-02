@@ -1,5 +1,7 @@
 # Putty-Ping
 
+**WINDOWS SPECIFIC**
+
 Not finished
 
 #### Steps to do: <br />
