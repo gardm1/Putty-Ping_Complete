@@ -13,10 +13,19 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Process">
+      <UniqueIdentifier>{a18805df-4c61-4c30-90e7-30f4e5c54874}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataHandler">
+      <UniqueIdentifier>{bd001cd1-c848-4901-9df1-148c144846a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\puttyping.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\process.c">
+      <Filter>Process</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -24,7 +33,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\process.h">
-      <Filter>Header Files</Filter>
+      <Filter>Process</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dataHandler.h">
+      <Filter>DataHandler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
