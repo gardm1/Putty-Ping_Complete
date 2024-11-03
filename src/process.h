@@ -37,4 +37,6 @@ int EXECUTECOMMAND(const char* sargv);
 
 int PING_INET_ADDR(const char* argv);
 
+// -------- Global end -------- //
+
 #endif // !__PROCESS_H

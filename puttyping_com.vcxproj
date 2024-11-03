@@ -91,6 +91,7 @@
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\dataHandler.c" />
     <ClCompile Include="src\process.c" />
     <ClCompile Include="src\puttyping.c" />
   </ItemGroup>

@@ -1,6 +1,11 @@
 #include "process.h"
 
 void Process_con(Process* process) {
+    process->hProcess = NULL;
+    process->hThread = NULL;
+    process->dwProcessId = 0;
+    process->dwThreadId = 0;
+
     ZeroMemory(&process->si, sizeof(process->si));
     process->si.cb = sizeof(process->si);
     ZeroMemory(&process->pi, sizeof(process->pi));
@@ -20,14 +25,14 @@ LPTSTR pchar_to_lptstr(const char* c) {
 
     int len = MultiByteToWideChar(CP_UTF8, 0, c, -1, NULL, 0);
     if (len == 0) {
-        printf("Error getting lenght of char string (%ld)\npchar_to_lptstr\n", GetLastError());
+        printf("Error getting lenght of char string (%ld).\npchar_to_lptstr\n", GetLastError());
         return NULL;
     }
 
-    // Allocate memory for the wide string
+    // Allocate memory --> Could use stack
     LPWSTR wideString = (LPWSTR)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, len * sizeof(WCHAR));
     if (wideString == NULL) {
-        printf("Memory allocation failed when converting to wide string (%ld)\npchar_to_lptstr\n", GetLastError());
+        printf("Memory allocation failed when converting to wide string (%ld).\npchar_to_lptstr\n", GetLastError());
         return NULL;
     }
 
@@ -45,6 +50,7 @@ int EXECUTECOMMAND(const char* sargv) {
 
     process.args = pchar_to_lptstr(sargv);
     if (process.args == NULL) {
+        printf("Command args failed to initialize.\nEXECUTECOMMAND\n");
         Process_decon(&process);
         return 1;
     }

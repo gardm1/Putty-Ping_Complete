@@ -5,18 +5,28 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
+#include <direct.h>
 
 
-//Find som other way than this, ugly
+/* Need to defined user variable(s)
+* 
+* Sessions directory path;
+* BASEDIR
+* 
+* System avalible emulators;
+* EMULATOR_AMOUNT
+* Datahandler_con --> char* emulators
+*/
+
+#define BASEDIR "C:\\Users\\gardm\\.putty\\sessions\\"
+#define EMULATOR_AMOUNT 2
 
 #define SESSIONS_AMOUNT 10
 #define MAX_SESSION_VAR_LEN 50
-#define EMULATOR_AMOUNT 2
-#define BASEDIR "C:\\Users\\NAME\\.putty\\sessions\\"
 
 typedef struct DataHandler {
     int ses_len;
-    int emu_len;
+    int emu_amo;
     int ses_amo;
     char* lusr;
     char* lsrv;
@@ -43,6 +53,8 @@ void DataHandler_removeTXT(DataHandler* dh, const char* fname);
 
 char* DataHandler_getFilePath(const char* fname);
 char* DataHandler_getDirePath(const char* dname);
+
+// -------- DataHandler end -------- //
 
 #endif // __DATAHANDLER_H
 

@@ -19,6 +19,9 @@
     <Filter Include="DataHandler">
       <UniqueIdentifier>{bd001cd1-c848-4901-9df1-148c144846a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Encrypter_c">
+      <UniqueIdentifier>{16503283-40b8-44bf-a0a6-b62d55bbc35d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\puttyping.c">
@@ -26,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="src\process.c">
       <Filter>Process</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dataHandler.c">
+      <Filter>DataHandler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
