@@ -8,15 +8,18 @@ int main() {
 
 	printf("Hello!\n");
 
-	const char* command = "calc.exe";
+	const char* command = "cmd.exe /c dir /a:d /s /b \"C:\\Users\\gardm\\.putty\\sessions\\\" | find /c \":\\\"";
+	printf("%s\n", command);
 
 	DataHandler dh;
 	DataHandler_con(&dh);
 
 	//const char* fname = "testing_server";
 
-	//EXECUTECOMMAND(command);
+	EXECUTECOMMAND(command);
+
 	
+
 
 
 	//DataHandler_addTXT(&dh, "testing_001", "000.222.333.111", "testing_again");
@@ -25,7 +28,6 @@ int main() {
 	//printf("\n--> %s\n", ip);
 	//DataHandler_removeTXT(&dh, "testing_001");
 
-	char** sessions__ = DataHandler_getSessionNames(&dh);
 
 
 	//PING_INET_ADDR(ip);

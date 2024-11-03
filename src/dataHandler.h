@@ -24,6 +24,12 @@
 #define SESSIONS_AMOUNT 10
 #define MAX_SESSION_VAR_LEN 50
 
+
+// If I manage to make getSessionNames to work I could
+// Make it so sessions var could be heap allocated
+// It would make it flexiable
+// By us counting the size of sessions
+
 typedef struct DataHandler {
     int ses_len;
     int emu_amo;
@@ -43,7 +49,7 @@ void DataHandler_decon(DataHandler* dh);
 const char* DataHandler_getSrv(DataHandler* dh);
 const char* DataHandler_getUsr(DataHandler* dh);
 const char* DataHandler_getEmulator(DataHandler* dh, int ilm);
-char** DataHandler_getSessionNames(DataHandler* dh);
+//char** DataHandler_getSessionNames(DataHandler* dh);
 
 // -------- 
 

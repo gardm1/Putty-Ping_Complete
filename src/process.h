@@ -15,6 +15,9 @@
 #include <icmpapi.h>
 #endif
 
+//#define RELEASE
+#define DEBUG
+
 typedef struct Process {
     LPTSTR args;
     ULONG ses_len;

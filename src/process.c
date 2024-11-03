@@ -75,8 +75,10 @@ int EXECUTECOMMAND(const char* sargv) {
         return 1;
     }
 
+#ifdef DEBUG
     printf("GetProcessID -> %d\n", GetProcessId(process.pi.hProcess));
     printf("GetThreadID -> %d\n", GetThreadId(process.pi.hThread));
+#endif
 
     WaitForSingleObject(process.pi.hProcess, INFINITE);
     Process_decon(&process);

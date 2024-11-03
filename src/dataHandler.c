@@ -47,47 +47,14 @@ const char* DataHandler_getEmulator(DataHandler* dh, int ilm) {
 }
 
 // Error here --> something does not work
-char** DataHandler_getSessionNames(DataHandler* dh) {
-    int count = 0;
-
-    const char* direPath = BASEDIR;
-
-    WIN32_FIND_DATA findFileData;
-    HANDLE hFind;
-    
-    char searchPath[MAX_PATH];
-    snprintf(searchPath, sizeof(searchPath), "%s*", direPath);
-
-    hFind = FindFirstFile(searchPath, &findFileData);
-    if (hFind == INVALID_HANDLE_VALUE) {
-        printf("Unable to open directory: %s\n", direPath);
-        return NULL;
-    }
-
-    // List all directories
-    do {
-        // Check if the entry is a directory
-        if (findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-            // Skip the current (.) and parent (..) directory entries
-            if (strcmp(findFileData.cFileName, ".") != 0 &&
-                strcmp(findFileData.cFileName, "..") != 0) {
-                dh->sessions[count] = findFileData.cFileName;
-                count++;
-            }
-        }
-    } while (FindNextFile(hFind, &findFileData) != 0);
-
-    // Close the handle
-    FindClose(hFind);
-
-    return dh->sessions;
-}
+//char** DataHandler_getSessionNames(DataHandler* dh) {
+//}
 
 void DataHandler_readTXT(DataHandler* dh, const char* fname) {
     char* filePath = DataHandler_getFilePath(fname);
-    printf("\n--> \"%s\"\n", filePath);
-    //char* path = NULL;
+
     FILE* fptr = fopen(filePath, "r");
+
     free(filePath);
 
     if (fptr == NULL) {
@@ -107,11 +74,9 @@ void DataHandler_addTXT(DataHandler* dh, const char* fname, const char* srv, con
     char* filePath = DataHandler_getFilePath(fname);
     char* direPath = DataHandler_getDirePath(fname);
 
-    printf("\n+-----------+\n\n--> %s\n", filePath);
-    printf("\n--> %s\n", direPath);
-
     if (_mkdir(direPath) == -1) {
         printf("Directory already exists or failed to create (%ld).\ndh-addTXT\n", GetLastError());
+        return;
     }
 
     FILE* fptr = fopen(filePath, "w");
@@ -145,7 +110,9 @@ void DataHandler_removeTXT(DataHandler* dh, const char* fname) {
         return;
     }
 
-    (void*)DataHandler_getSessionNames(dh);
+    free(filePath);
+    free(direPath);
+    //(void*)DataHandler_getSessionNames(dh);
 }
 
 char* DataHandler_getFilePath(const char* fname) {
