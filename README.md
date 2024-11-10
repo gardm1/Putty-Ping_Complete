@@ -6,7 +6,7 @@ Not finished
 
 #### Steps to do: <br />
 - [x] Convert code to c code <br />
-- [ ] Add openssl or libgcrypt encryption <br />
+- [ ] Add openssl or libgcrypt encryption (use gcc, not cl) <br />
 - [ ] Simplify <br />
 - [ ] Add CLI built in go (Cobra/Bonzai) <br />
 - [ ] Embed the c code in go <br />
