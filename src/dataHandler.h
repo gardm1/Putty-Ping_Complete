@@ -4,9 +4,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef _WIN32
 #include <windows.h>
 #include <direct.h>
+#endif
 
+//#define RELEASE
+#define DEBUG
 
 /* Need to defined user variable(s)
 * 
@@ -31,13 +36,13 @@
 // By us counting the size of sessions
 
 typedef struct DataHandler {
-    int ses_len;
-    int emu_amo;
-    int ses_amo;
-    char* lusr;
-    char* lsrv;
-    char* emulators[EMULATOR_AMOUNT];
-    char* sessions[SESSIONS_AMOUNT];
+	int ses_len;
+	int emu_amo;
+	int ses_amo;
+	char* lusr;
+	char* lsrv;
+	char* emulators[EMULATOR_AMOUNT];
+	char* sessions[SESSIONS_AMOUNT];
 } DataHandler;
 
 void DataHandler_con(DataHandler* dh);

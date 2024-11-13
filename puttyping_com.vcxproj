@@ -70,6 +70,7 @@
     <NMakeBuildCommandLine>nmake /f Makefile</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>nmake /f Makefile clean &amp;&amp; nmake /f Makefile</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>nmake /f Makefile clean</NMakeCleanCommandLine>
+    <IncludePath>C:\Users\gardm\usr\include\libgcrypt;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <NMakeOutput>puttyping_com.exe</NMakeOutput>
@@ -87,6 +88,7 @@
     <NMakeBuildCommandLine>nmake /f Makefile</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>nmake /f Makefile clean &amp;&amp; nmake /f Makefile</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>nmake /f Makefile clean</NMakeCleanCommandLine>
+    <IncludePath>C:\Users\gardm\usr\include\libgcrypt;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>

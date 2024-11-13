@@ -15,18 +15,19 @@
 #include <icmpapi.h>
 #endif
 
+
 //#define RELEASE
 #define DEBUG
 
 typedef struct Process {
-    LPTSTR args;
-    ULONG ses_len;
-    HANDLE hProcess;
-    HANDLE hThread;
-    STARTUPINFO si;
-    PROCESS_INFORMATION pi;
-    DWORD dwProcessId;
-    DWORD dwThreadId;
+	LPTSTR args;
+	ULONG ses_len;
+	HANDLE hProcess;
+	HANDLE hThread;
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+	DWORD dwProcessId;
+	DWORD dwThreadId;
 } Process;
 
 void Process_con(Process* process);
