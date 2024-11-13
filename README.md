@@ -4,7 +4,7 @@
 
 Not finished
 
-#### Steps to do: <br />
+#### Todos: <br />
 - [x] Convert code to c code <br />
 - [ ] Add openssl or libgcrypt encryption <br />
 - [ ] Simplify <br />
@@ -14,21 +14,21 @@ Not finished
 
 ### Libgcrypt (gcrypt.h & gpg-error.h) installation guide using cl.exe
 
-**Step one.**
+**Step one.** <br />
+Install MSYS2
 
-* Install MSYS2
-  * Enter MSYS2 UCRT64. Make sure it's updated <br />
-  ``` bash
-  pacman -Syu
-  ```
-  * Install libgcrypt and libgpg-error
-  ``` bash
-  pacman -S mingw-w64-x86_64-libgcrypt mingw-w64-x86_64-libgpg-error
-  ```
-  * Install mingw-w64-tools
-  ``` bash
-  pacman -S mingw-w64-ucrt-x86_64-tools
-  ```
+* Enter MSYS2 UCRT64. Make sure it's updated <br />
+``` bash
+pacman -Syu
+```
+* Install libgcrypt and libgpg-error
+``` bash
+pacman -S mingw-w64-x86_64-libgcrypt mingw-w64-x86_64-libgpg-error
+```
+* Install mingw-w64-tools
+``` bash
+pacman -S mingw-w64-ucrt-x86_64-tools
+```
 
 **Step two.** <br />
 Build .lib from .dll using .def
@@ -49,7 +49,8 @@ Build .lib from .dll using .def
   ``` bash
   touch libgcrypt-20.def
   ```
-  Open and check that the file isn't empty.
+  Open and check that the file isn't empty
+  
   * Create a .lib from .def
   ``` bash
   dlltool -d libgcrypt.def -l libgcrypt.lib
