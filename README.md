@@ -56,8 +56,7 @@ Build .lib from .dll using .def
   dlltool -d libgcrypt.def -l libgcrypt.lib
   ```
 
-Repeat and do the same for gpg-error.h (libgpg-error-0.dll). <br />
-Make sure the .lib files are in the same directory, and <br />
-that the .h files are in the same directory afterwards. 
+Repeat step two and do the same for gpg-error.h (libgpg-error-0.dll). <br />
+Make sure the compiler knows where they are.
 
-Now you can copy this to wherever and use it in a project. 
+Now you can copy this to wherever and use it in a project.
