@@ -8,10 +8,11 @@ Not finished
 #### Todos: <br />
 - [x] Convert code to c code <br />
 - [x] Add libgcrypt encryption <br />
-- [ ] Simplify <br />
+- [x] Simplify <br />
 - [ ] Embed the c code in go <br />
 - [ ] Add CLI built in go (Cobra/Bonzai) <br />
 - [ ] Add go crypto as a option as well <br />
+- [ ] Simplify again and clean up <br />
 
 ### Libgcrypt (gcrypt.h & gpg-error.h) installation guide using cl.exe
 
