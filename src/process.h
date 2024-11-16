@@ -30,8 +30,8 @@ typedef struct Process {
 	DWORD dwThreadId;
 } Process;
 
-void Process_con(Process* process);
-void Process_decon(Process* process);
+// Process_con(Process* process) --> Private (static)
+// Process_decon(Process* process) --> Private (static)
 
 // -------- Process end -------- //
 

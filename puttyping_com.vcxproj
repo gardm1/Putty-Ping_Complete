@@ -94,15 +94,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\dataHandler.c" />
+    <ClCompile Include="src\libgcrypt_crypto.c" />
     <ClCompile Include="src\process.c" />
     <ClCompile Include="src\puttyping.c" />
+    <ClCompile Include="src\util\encryption.c" />
+    <ClCompile Include="src\util\hmac.c" />
+    <ClCompile Include="src\util\rsa.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dataHandler.h" />
+    <ClInclude Include="src\libgcrypt_crypto.h" />
     <ClInclude Include="src\process.h" />
+    <ClInclude Include="src\util\encryption.h" />
+    <ClInclude Include="src\util\hmac.h" />
+    <ClInclude Include="src\util\rsa.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="texttesting.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

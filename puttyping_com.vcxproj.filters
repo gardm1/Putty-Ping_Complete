@@ -19,8 +19,17 @@
     <Filter Include="DataHandler">
       <UniqueIdentifier>{bd001cd1-c848-4901-9df1-148c144846a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Encrypter_c">
+    <Filter Include="libgcrypt">
       <UniqueIdentifier>{16503283-40b8-44bf-a0a6-b62d55bbc35d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libgcrypt\encryption">
+      <UniqueIdentifier>{e0854dd7-743b-4607-863a-84b0326823e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libgcrypt\rsa">
+      <UniqueIdentifier>{65ef38a4-36ea-46a4-8f47-50e4edd0df15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libgcrypt\hmac">
+      <UniqueIdentifier>{6d1acb20-d248-48da-97b5-37efe3a31ea1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +42,18 @@
     <ClCompile Include="src\dataHandler.c">
       <Filter>DataHandler</Filter>
     </ClCompile>
+    <ClCompile Include="src\libgcrypt_crypto.c">
+      <Filter>libgcrypt</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\encryption.c">
+      <Filter>libgcrypt\encryption</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\hmac.c">
+      <Filter>libgcrypt\hmac</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\rsa.c">
+      <Filter>libgcrypt\rsa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -44,5 +65,20 @@
     <ClInclude Include="src\dataHandler.h">
       <Filter>DataHandler</Filter>
     </ClInclude>
+    <ClInclude Include="src\libgcrypt_crypto.h">
+      <Filter>libgcrypt</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\encryption.h">
+      <Filter>libgcrypt\encryption</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\hmac.h">
+      <Filter>libgcrypt\hmac</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\rsa.h">
+      <Filter>libgcrypt\rsa</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="texttesting.txt" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #include "process.h"
 
-void Process_con(Process* process) {
+static void Process_con(Process* process) {
 	process->hProcess = NULL;
 	process->hThread = NULL;
 	process->dwProcessId = 0;
@@ -12,7 +12,7 @@ void Process_con(Process* process) {
 	process->args = NULL;
 }
 
-void Process_decon(Process* process) {
+static void Process_decon(Process* process) {
 	CloseHandle(process->pi.hProcess);
 	CloseHandle(process->pi.hThread);
 
@@ -24,7 +24,7 @@ LPTSTR pchar_to_lptstr(const char* c) {
 	if (c == NULL) return NULL;
 
 	//int len = MultiByteToWideChar(CP_UTF8, 0, c, -1, NULL, 0);
-	int len = strlen(c) + 1;
+	int len = (int)strlen(c) + 1;
 	if (len == 0) {
 		printf("Error getting lenght of char string (%ld).\npchar_to_lptstr\n", GetLastError());
 		return NULL;
@@ -56,7 +56,7 @@ int EXECUTECOMMAND(const char* sargv) {
 		return 1;
 	}
 
-	wprintf(L"%ls\n", process.args);
+	//wprintf(L"%ls\n", process.args);
 
 	if (!CreateProcess(
 		NULL,
