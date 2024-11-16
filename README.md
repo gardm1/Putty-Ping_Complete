@@ -10,6 +10,7 @@ Not finished
 - [x] Add libgcrypt encryption <br />
 - [x] Simplify <br />
 - [ ] Embed the c code in go <br />
+- [ ] Add go data handler, scrap the c version <br />
 - [ ] Add CLI built in go (Cobra/Bonzai) <br />
 - [ ] Add go crypto as a option as well <br />
 - [ ] Simplify again and clean up <br />
