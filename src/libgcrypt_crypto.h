@@ -20,5 +20,5 @@ int encrypt_file(const char* input_file_path, const char* output_file_path, cons
 
 int decrypt_file(const char* input_file_path, const char* output_file_path, const char* key_file_path);
 
-#endif // LIBGCRYPT_CRYPTO_H
+#endif // __LIBGCRYPT_CRYPTO_H
 

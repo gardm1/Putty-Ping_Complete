@@ -1,89 +1,90 @@
 #include "process.h"
 
-static void Process_con(Process* process) {
-	process->hProcess = NULL;
-	process->hThread = NULL;
-	process->dwProcessId = 0;
-	process->dwThreadId = 0;
+static LPTSTR pchar_to_lptstr(const char* c) {
+	if (!c) return NULL;
 
-	ZeroMemory(&process->si, sizeof(process->si));
-	process->si.cb = sizeof(process->si);
-	ZeroMemory(&process->pi, sizeof(process->pi));
-	process->args = NULL;
-}
-
-static void Process_decon(Process* process) {
-	CloseHandle(process->pi.hProcess);
-	CloseHandle(process->pi.hThread);
-
-	HeapFree(GetProcessHeap(), 0, process->args);
-	process->args = NULL;
-}
-
-LPTSTR pchar_to_lptstr(const char* c) {
-	if (c == NULL) return NULL;
-
-	//int len = MultiByteToWideChar(CP_UTF8, 0, c, -1, NULL, 0);
-	int len = (int)strlen(c) + 1;
-	if (len == 0) {
-		printf("Error getting lenght of char string (%ld).\npchar_to_lptstr\n", GetLastError());
+	// Specify char string c is in utf-8 encoding
+	int len = MultiByteToWideChar(CP_UTF8, 0, c, -1, NULL, 0);
+	if (len <= 1) {
+		fprintf(stderr, "Error: Lenght of char string returns 0 (%ld).\n", GetLastError());
 		return NULL;
 	}
 
-	// Allocate memory --> Could use stack
-	LPWSTR wideString = (LPWSTR)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, len * sizeof(WCHAR));
-	if (wideString == NULL) {
-		printf("Memory allocation failed when converting to wide string (%ld).\npchar_to_lptstr\n", GetLastError());
+	LPWSTR wideString = (LPWSTR)malloc(len * sizeof(WCHAR));
+	if (!wideString) {
+		fprintf(stderr, "Error: Memory allocation failed when converting to wide string (%ld).\n", GetLastError());
 		return NULL;
 	}
 
 	// Convert the multibyte string to a wide string
 	MultiByteToWideChar(CP_UTF8, 0, c, -1, wideString, len);
 
-	// LPWSTR --> LPTSTR
 	return (LPTSTR)wideString;
 }
 
-
 int EXECUTECOMMAND(const char* sargv) {
-	Process process;
-	Process_con(&process);
+	LPTSTR args = NULL;
+	HANDLE hProcess = NULL;
+	HANDLE hThread = NULL;
+	DWORD dwProcessId = 0;
+	DWORD dwThreadId = 0;
+	DWORD dwRetVal = 0;
 
-	process.args = pchar_to_lptstr(sargv);
-	if (process.args == NULL) {
-		printf("Command args failed to initialize.\nEXECUTECOMMAND\n");
-		Process_decon(&process);
-		return 1;
+	args = pchar_to_lptstr(sargv);
+	if (!args) {
+		fprintf(stderr, "Error: Command args failed to initialize.\n");
+		return -1;
 	}
 
-	//wprintf(L"%ls\n", process.args);
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
 
 	if (!CreateProcess(
 		NULL,
-		process.args,
+		args,
 		NULL,
 		NULL,
 		FALSE,
 		0,
 		NULL,
 		NULL,
-		&process.si,
-		&process.pi
+		&si,
+		&pi
 	))
 	{
-		printf("CreateProcess Failed (%ld).\nEXECUTECOMMAND\n", GetLastError());
-		Process_decon(&process);
-		return 1;
+		fprintf(stderr, "Error: CreateProcess Failed (%ld).\n", GetLastError());
+		CloseHandle(pi.hProcess);
+		CloseHandle(pi.hThread);
+		free(args);
+		return -1;
 	}
 
 #ifdef DEBUG
-	printf("GetProcessID -> %d\n", GetProcessId(process.pi.hProcess));
-	printf("GetThreadID -> %d\n", GetThreadId(process.pi.hThread));
+	printf("GetProcessID -> %d\n", GetProcessId(pi.hProcess));
+	printf("GetThreadID -> %d\n", GetThreadId(pi.hThread));
 #endif
 
-	WaitForSingleObject(process.pi.hProcess, INFINITE);
-	Process_decon(&process);
+	dwRetVal = WaitForSingleObject(pi.hProcess, SINGLEOBJTIME);
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+	free(args);
 
+	if (dwRetVal != WAIT_OBJECT_0) {
+		fprintf(stderr, "Error: WaitForSingleObject failed.\n");
+		switch (dwRetVal) {
+		case WAIT_TIMEOUT:
+			printf("\tRequest timed out\n");
+			break;
+		default:
+			printf("\tExtended error returned (%ld)", GetLastError());
+			break;
+		}
+		return -1;
+	}
 	return 0;
 }
 
@@ -98,27 +99,27 @@ int PING_INET_ADDR(const char* argv) {
 
 	ipaddr = inet_addr(argv);
 	if (ipaddr == INADDR_NONE) {
-		printf("Invalid Ip address\n");
-		return 1;
+		fprintf(stderr, "Error: Invalid Ip address\n");
+		return -1;
 	}
 
 	hIcmpFile = IcmpCreateFile();
 	if (hIcmpFile == INVALID_HANDLE_VALUE) {
-		printf("\tUnable to open handle.\n");
-		printf("IcmpCreatefile returned error: %ld\n", GetLastError());
-		return 1;
+		fprintf(stderr, "\tError: Unable to open handle.\nIcmpCreatefile errorcode (%ld).\n", GetLastError());
+		return -1;
 	}
 
 	ReplySize = sizeof(ICMP_ECHO_REPLY) + sizeof(SendData) + 8;
 	ReplyBuffer = malloc(ReplySize);
 	if (ReplyBuffer == NULL) {
-		printf("\tUnable to allocate memory for reply buffer\n");
-		return 1;
+		fprintf(stderr, "\tError: Unable to allocate memory for reply buffer.\n");
+		IcmpCloseHandle(hIcmpFile);
+		return -1;
 	}
 
 	dwRetVal = IcmpSendEcho2(hIcmpFile, NULL, NULL, NULL,
 		ipaddr, SendData, sizeof(SendData), NULL,
-		ReplyBuffer, ReplySize, 5000);
+		ReplyBuffer, ReplySize, ICMPTIME);
 	if (dwRetVal != 0) {
 		PICMP_ECHO_REPLY pEchoReply = (PICMP_ECHO_REPLY)ReplyBuffer;
 		struct in_addr ReplyAddr;
@@ -152,7 +153,7 @@ int PING_INET_ADDR(const char* argv) {
 		printf("\t  Roundtrip time = %ld milliseconds\n", pEchoReply->RoundTripTime);
 	}
 	else {
-		printf("Call to IcmpSendEcho2 failed.\n");
+		fprintf(stderr, "Error: Call to IcmpSendEcho2 failed.\n");
 		dwError = GetLastError();
 		switch (dwError) {
 		case IP_BUF_TOO_SMALL:
@@ -162,13 +163,15 @@ int PING_INET_ADDR(const char* argv) {
 			printf("\tRequest timed out\n");
 			break;
 		default:
-			printf("\tExtended error returned: %ld\n", dwError);
+			printf("\tExtended error returned (%ld)\n", dwError);
 			break;
 		}
 		free(ReplyBuffer);
-		return 1;
+		IcmpCloseHandle(hIcmpFile);
+		return -1;
 	}
 	free(ReplyBuffer);
+	IcmpCloseHandle(hIcmpFile);
 	return 0;
 }
 

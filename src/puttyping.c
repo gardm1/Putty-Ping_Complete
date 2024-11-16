@@ -1,5 +1,4 @@
 #include "process.h"
-#include "dataHandler.h"
 
 #include "libgcrypt_crypto.h"
 
@@ -32,13 +31,9 @@ int main() {
 	//	fprintf(stderr, "Error decrypting file.\n");
 	//}
 
-	printf("Hello!\n");
-
 	//const char* command = "cmd.exe /c dir /a:d /s /b \"C:\\Users\\gardm\\.putty\\sessions\\\" | find /c \":\\\"";
 	//printf("%s\n", command);
 
-	DataHandler dh;
-	DataHandler_con(&dh);
 
 	//const char* fname = "testing_server";
 
@@ -56,9 +51,8 @@ int main() {
 
 
 
-	//PING_INET_ADDR("000.111.222.333");
+	//PING_INET_ADDR("111.222.333.444");
 
-	DataHandler_decon(&dh);
 
 
 	(void)getchar();

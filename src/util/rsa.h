@@ -11,4 +11,4 @@ void generate_rsa_keys();
 int encrypt_aes_key(const unsigned char* aes_key, unsigned char* encrypted_key);
 int decrypt_aes_key(const unsigned char* encrypted_key, unsigned char* aes_key);
 
-#endif // RSA_H
+#endif // __RSA_H

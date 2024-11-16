@@ -19,28 +19,11 @@
 //#define RELEASE
 #define DEBUG
 
-typedef struct Process {
-	LPTSTR args;
-	ULONG ses_len;
-	HANDLE hProcess;
-	HANDLE hThread;
-	STARTUPINFO si;
-	PROCESS_INFORMATION pi;
-	DWORD dwProcessId;
-	DWORD dwThreadId;
-} Process;
-
-// Process_con(Process* process) --> Private (static)
-// Process_decon(Process* process) --> Private (static)
-
-// -------- Process end -------- //
-
-LPTSTR pchar_to_lptstr(const char* c);
+#define ICMPTIME 5000
+#define SINGLEOBJTIME 3000
 
 int EXECUTECOMMAND(const char* sargv);
 
 int PING_INET_ADDR(const char* argv);
-
-// -------- Global end -------- //
 
 #endif // !__PROCESS_H

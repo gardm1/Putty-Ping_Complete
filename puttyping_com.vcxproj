@@ -112,9 +112,6 @@
     <ClInclude Include="src\util\hmac.h" />
     <ClInclude Include="src\util\rsa.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="texttesting.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

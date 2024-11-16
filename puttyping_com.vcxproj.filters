@@ -78,7 +78,4 @@
       <Filter>libgcrypt\rsa</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="texttesting.txt" />
-  </ItemGroup>
 </Project>

@@ -7,5 +7,5 @@
 
 void compute_hmac(const unsigned char* data, int data_len, unsigned char* key, unsigned char* output);
 
-#endif // HMAC_H
+#endif // __HMAC_H
 
