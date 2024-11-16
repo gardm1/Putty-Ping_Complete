@@ -1,15 +1,16 @@
 # Putty-Ping
 
-**WINDOWS SPECIFIC**
+**WINDOWS SPECIFIC** <br />
+<sub>nmake Makefile to link .lib's and vs2022 to link .dll's</sub>
 
 Not finished
 
 #### Todos: <br />
 - [x] Convert code to c code <br />
-- [ ] Add openssl or libgcrypt encryption <br />
+- [x] Add libgcrypt encryption <br />
 - [ ] Simplify <br />
-- [ ] Add CLI built in go (Cobra/Bonzai) <br />
 - [ ] Embed the c code in go <br />
+- [ ] Add CLI built in go (Cobra/Bonzai) <br />
 - [ ] Add go crypto as a option as well <br />
 
 ### Libgcrypt (gcrypt.h & gpg-error.h) installation guide using cl.exe
