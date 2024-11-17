@@ -9,6 +9,56 @@ void generate_rsa_keys() {
 	gcry_sexp_release(params);
 }
 
+void save_rsa_keys() {
+	size_t len = gcry_sexp_sprint(rsa_keypair, GCRYSEXP_FMT_CANON, NULL, 0);
+	unsigned char* serialized_keys = (unsigned char*)malloc(len);
+	if (!serialized_keys) {
+		fprintf(stderr, "Error: Memory allocation failed.\n");
+		exit(EXIT_FAILURE);
+	}
+	gcry_sexp_sprint(rsa_keypair, GCRYSEXP_FMT_CANON, (char*)serialized_keys, len);
+
+	FILE* file = fopen("rsa_keypair.bin", "wb");
+	if (!file) {
+		fprintf(stderr, "Error: Could not save RSA keys.\n");
+		free(serialized_keys);
+		exit(EXIT_FAILURE);
+	}
+	fwrite(serialized_keys, 1, len, file);
+	fclose(file);
+	free(serialized_keys);
+}
+
+void load_rsa_keys() {
+	FILE* file = fopen("rsa_keypair.bin", "rb");
+	if (!file) {
+		fprintf(stderr, "Warning: RSA keys not found. Generating new keys.\n");
+		generate_rsa_keys();
+		save_rsa_keys();
+		return;
+	}
+	fseek(file, 0, SEEK_END);
+	long len = ftell(file);
+	fseek(file, 0, SEEK_SET);
+
+	unsigned char* serialized_keys = (unsigned char*)malloc(len);
+	if (!serialized_keys) {
+		fprintf(stderr, "Error: Memory allocation failed.\n");
+		fclose(file);
+		exit(EXIT_FAILURE);
+	}
+	fread(serialized_keys, 1, len, file);
+	fclose(file);
+
+	gcry_error_t err = gcry_sexp_new(&rsa_keypair, serialized_keys, len, 1);
+	if (err) {
+		fprintf(stderr, "Error: Failed to load RSA keys: %s\n", gcry_strerror(err));
+		free(serialized_keys);
+		exit(EXIT_FAILURE);
+	}
+	free(serialized_keys);
+}
+
 int encrypt_aes_key(const unsigned char* aes_key, unsigned char* encrypted_key) {
 	gcry_sexp_t data, ciphertext;
 	gcry_sexp_build(&data, NULL, "(data (flags raw) (value %b))", AES_KEY_SIZE, aes_key);

@@ -6,13 +6,13 @@ static LPTSTR pchar_to_lptstr(const char* c) {
 	// Specify char string c is in utf-8 encoding
 	int len = MultiByteToWideChar(CP_UTF8, 0, c, -1, NULL, 0);
 	if (len <= 1) {
-		fprintf(stderr, "Error: Lenght of char string returns 0 (%ld).\n", GetLastError());
+		fprintf(stderr, "Error: Lenght of char string is invalid, eer (%ld).\n", GetLastError());
 		return NULL;
 	}
 
 	LPWSTR wideString = (LPWSTR)malloc(len * sizeof(WCHAR));
 	if (!wideString) {
-		fprintf(stderr, "Error: Memory allocation failed when converting to wide string (%ld).\n", GetLastError());
+		fprintf(stderr, "Error: Memory allocation failed converting to wide string, eer (%ld).\n", GetLastError());
 		return NULL;
 	}
 
@@ -22,7 +22,7 @@ static LPTSTR pchar_to_lptstr(const char* c) {
 	return (LPTSTR)wideString;
 }
 
-int EXECUTECOMMAND(const char* sargv) {
+int EXECUTECOMMAND(const char* argv) {
 	LPTSTR args = NULL;
 	HANDLE hProcess = NULL;
 	HANDLE hThread = NULL;
@@ -30,7 +30,7 @@ int EXECUTECOMMAND(const char* sargv) {
 	DWORD dwThreadId = 0;
 	DWORD dwRetVal = 0;
 
-	args = pchar_to_lptstr(sargv);
+	args = pchar_to_lptstr(argv);
 	if (!args) {
 		fprintf(stderr, "Error: Command args failed to initialize.\n");
 		return -1;
@@ -56,7 +56,7 @@ int EXECUTECOMMAND(const char* sargv) {
 		&pi
 	))
 	{
-		fprintf(stderr, "Error: CreateProcess Failed (%ld).\n", GetLastError());
+		fprintf(stderr, "Error: CreateProcess Failed, eer (%ld).\n", GetLastError());
 		CloseHandle(pi.hProcess);
 		CloseHandle(pi.hThread);
 		free(args);
@@ -80,7 +80,7 @@ int EXECUTECOMMAND(const char* sargv) {
 			printf("\tRequest timed out\n");
 			break;
 		default:
-			printf("\tExtended error returned (%ld)", GetLastError());
+			printf("\tExtended error returned (%ld)\n", GetLastError());
 			break;
 		}
 		return -1;

@@ -3,7 +3,8 @@
 
 /* 
 * encryption.c & .h: Handle AES-256 encryption/decryption
-* rsa.c & .h: Handle RSA encryption of the AES key
+* rsa.c & .h: Handle RSA encryption of the AES key 
+	Not yet included, may be later if I figure it out.
 * hmac.c & .h: Handle HMAC-SHA256 for integrity checking
 */
 
