@@ -1,8 +1,8 @@
 # Putty-Ping
 
 **WINDOWS SPECIFIC** <br />
-<sub>nmake Makefile ran in cmd with vcvars64.bat initialization (x64 program, not x86)</sub> <br />
-<sub>Install vs2022, create a solution, add the project to the solution</sub>
+<sub><ins>nmake</ins> Makefile ran in cmd with vcvars64.bat initialization (x64 program, not x86)</sub> <br />
+<sub>Can just use 'x64 Native Tools Command Prompt for VS 2022'</sub>
 
 Not finished
 
@@ -16,7 +16,7 @@ Not finished
 - [ ] Add rsa to handle AES key encryption <br />
 - [ ] Simplify again and clean up <br />
 
-### Libgcrypt (gcrypt.h & gpg-error.h) installation guide using cl.exe
+### Libgcrypt (gcrypt.h & gpg-error.h) installation guide for x64
 
 **Step one.** <br />
 Install MSYS2
