@@ -25,7 +25,7 @@ static int check_mem_alloc_fail(unsigned char* c, FILE* file) {
 	return 0;
 }
 
-int encrypt_file(const char* input_file_path, const char* output_file_path, const char* key_file_path) {
+int ENCRYPT_FILE(const char* input_file_path, const char* output_file_path, const char* key_file_path) {
 	unsigned char aes_key[AES_KEY_SIZE];
 	unsigned char iv[AES_BLOCK_SIZE];
 	unsigned char hmac[32];
@@ -84,7 +84,7 @@ int encrypt_file(const char* input_file_path, const char* output_file_path, cons
 	return 0;
 }
 
-int decrypt_file(const char* input_file_path, const char* output_file_path, const char* key_file_path) {
+int DECRYPT_FILE(const char* input_file_path, const char* output_file_path, const char* key_file_path) {
 	unsigned char aes_key[AES_KEY_SIZE];
 	unsigned char iv[AES_BLOCK_SIZE];
 	unsigned char hmac[32];

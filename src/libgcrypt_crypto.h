@@ -17,9 +17,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-int encrypt_file(const char* input_file_path, const char* output_file_path, const char* key_file_path);
+int ENCRYPT_FILE(const char* input_file_path, const char* output_file_path, const char* key_file_path);
 
-int decrypt_file(const char* input_file_path, const char* output_file_path, const char* key_file_path);
+int DECRYPT_FILE(const char* input_file_path, const char* output_file_path, const char* key_file_path);
 
 #endif // __LIBGCRYPT_CRYPTO_H
 
