@@ -1,7 +1,8 @@
 # Putty-Ping
 
 **WINDOWS SPECIFIC** <br />
-<sub>nmake Makefile to link .lib's and vs2022 to link .dll's</sub>
+<sub><ins>nmake</ins> Makefile ran in cmd with vcvars64.bat initialization (x64 program, not x86)</sub> <br />
+<sub>Can just use 'x64 Native Tools Command Prompt for VS 2022'</sub>
 
 Not finished
 
@@ -12,10 +13,10 @@ Not finished
 - [ ] Embed the c code in go <br />
 - [ ] Add go data handler, scrap the c version <br />
 - [ ] Add CLI built in go (Cobra/Bonzai) <br />
-- [ ] Add go crypto as a option as well <br />
+- [ ] Add rsa to handle AES key encryption <br />
 - [ ] Simplify again and clean up <br />
 
-### Libgcrypt (gcrypt.h & gpg-error.h) installation guide using cl.exe
+### Libgcrypt (gcrypt.h & gpg-error.h) installation guide for x64
 
 **Step one.** <br />
 Install MSYS2
