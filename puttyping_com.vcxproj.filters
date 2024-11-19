@@ -39,9 +39,6 @@
     <ClCompile Include="src\process.c">
       <Filter>Process</Filter>
     </ClCompile>
-    <ClCompile Include="src\dataHandler.c">
-      <Filter>DataHandler</Filter>
-    </ClCompile>
     <ClCompile Include="src\libgcrypt_crypto.c">
       <Filter>libgcrypt</Filter>
     </ClCompile>
@@ -61,9 +58,6 @@
   <ItemGroup>
     <ClInclude Include="src\process.h">
       <Filter>Process</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dataHandler.h">
-      <Filter>DataHandler</Filter>
     </ClInclude>
     <ClInclude Include="src\libgcrypt_crypto.h">
       <Filter>libgcrypt</Filter>

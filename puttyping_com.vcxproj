@@ -93,7 +93,6 @@
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\dataHandler.c" />
     <ClCompile Include="src\libgcrypt_crypto.c" />
     <ClCompile Include="src\process.c" />
     <ClCompile Include="src\puttyping.c" />
@@ -105,7 +104,6 @@
     <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\dataHandler.h" />
     <ClInclude Include="src\libgcrypt_crypto.h" />
     <ClInclude Include="src\process.h" />
     <ClInclude Include="src\util\encryption.h" />
