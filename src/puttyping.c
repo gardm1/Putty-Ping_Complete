@@ -37,7 +37,7 @@ int main() {
 
 	//const char* fname = "testing_server";
 
-	EXECUTECOMMAND("calc.exe");
+	EXECUTE_COMMAND("calc.exe");
 
 	
 

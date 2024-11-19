@@ -1,28 +1,6 @@
 #include "process.h"
 
-static LPTSTR pchar_to_lptstr(const char* c) {
-	if (!c) return NULL;
-
-	// Specify char string c is in utf-8 encoding
-	int len = MultiByteToWideChar(CP_UTF8, 0, c, -1, NULL, 0);
-	if (len <= 1) {
-		fprintf(stderr, "Error: Lenght of char string is invalid, eer (%ld).\n", GetLastError());
-		return NULL;
-	}
-
-	LPWSTR wideString = (LPWSTR)malloc(len * sizeof(WCHAR));
-	if (!wideString) {
-		fprintf(stderr, "Error: Memory allocation failed converting to wide string, eer (%ld).\n", GetLastError());
-		return NULL;
-	}
-
-	// Convert the multibyte string to a wide string
-	MultiByteToWideChar(CP_UTF8, 0, c, -1, wideString, len);
-
-	return (LPTSTR)wideString;
-}
-
-int EXECUTECOMMAND(const char* argv) {
+int EXECUTE_COMMAND(const char* argv) {
 	LPTSTR args = NULL;
 	HANDLE hProcess = NULL;
 	HANDLE hThread = NULL;
@@ -30,11 +8,22 @@ int EXECUTECOMMAND(const char* argv) {
 	DWORD dwThreadId = 0;
 	DWORD dwRetVal = 0;
 
-	args = pchar_to_lptstr(argv);
-	if (!args) {
-		fprintf(stderr, "Error: Command args failed to initialize.\n");
+
+	// When done doing the go stuff things, which I have been avoiding for some reason
+	// See if utf-16 is even needed or if you can just use ansi strings. 
+	int buffer_size = MultiByteToWideChar(CP_UTF8, 0, argv, -1, NULL, 0);
+	if (buffer_size == 0) {
+		fprintf(stderr, "Error: Getting size for wide string failed.\n");
 		return -1;
 	}
+
+	WCHAR* buffer = (WCHAR*)malloc(buffer_size * sizeof(WCHAR));
+	MultiByteToWideChar(CP_UTF8, 0, argv, -1, buffer, buffer_size);
+	args = (LPTSTR)buffer;
+
+	//WCHAR buffer[256];
+	//MultiByteToWideChar(CP_UTF8, 0, argv, -1, buffer, sizeof(buffer) / sizeof(WCHAR));
+	//args = (LPTSTR)buffer;
 
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;

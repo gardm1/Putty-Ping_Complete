@@ -22,7 +22,7 @@
 #define ICMPTIME 5000
 #define SINGLEOBJTIME 3000
 
-int EXECUTECOMMAND(const char* argv);
+int EXECUTE_COMMAND(const char* argv);
 
 int PING_INET_ADDR(const char* argv);
 
