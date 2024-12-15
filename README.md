@@ -10,7 +10,7 @@ Not finished
 - [x] Convert code to c code <br />
 - [x] Add libgcrypt encryption <br />
 - [x] Simplify <br />
-- [ ] Embed the c code in go <br />
+- [ ] Embed the c code in go (need to rewrite in gcc, cgo hates cl) <br />
 - [ ] Add go data handler, scrap the c version <br />
 - [ ] Add CLI built in go (Cobra/Bonzai) <br />
 - [ ] Add rsa to handle AES key encryption <br />
