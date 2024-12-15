@@ -6,17 +6,16 @@ int EXECUTE_COMMAND(const char* argv) {
 	HANDLE hThread = NULL;
 	DWORD dwProcessId = 0;
 	DWORD dwThreadId = 0;
+	BOOL bRetVal = FALSE;
 	DWORD dwRetVal = 0;
+	DWORD dwError = 0;
 
-
-	// When done doing the go stuff things, which I have been avoiding for some reason
 	// See if utf-16 is even needed or if you can just use ansi strings. 
 	int buffer_size = MultiByteToWideChar(CP_UTF8, 0, argv, -1, NULL, 0);
 	if (buffer_size == 0) {
 		fprintf(stderr, "Error: Getting size for wide string failed.\n");
 		return -1;
 	}
-
 	WCHAR* buffer = (WCHAR*)malloc(buffer_size * sizeof(WCHAR));
 	MultiByteToWideChar(CP_UTF8, 0, argv, -1, buffer, buffer_size);
 	args = (LPTSTR)buffer;
@@ -32,48 +31,63 @@ int EXECUTE_COMMAND(const char* argv) {
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
 
-	if (!CreateProcess(
-		NULL,
-		args,
-		NULL,
-		NULL,
-		FALSE,
-		0,
-		NULL,
-		NULL,
-		&si,
-		&pi
-	))
-	{
-		fprintf(stderr, "Error: CreateProcess Failed, eer (%ld).\n", GetLastError());
-		CloseHandle(pi.hProcess);
-		CloseHandle(pi.hThread);
-		free(args);
-		return -1;
-	}
+	bRetVal = CreateProcess(NULL, args, NULL, NULL,
+		FALSE, 0, NULL, NULL,
+		&si, &pi);
 
+	if (bRetVal != 0) {
 #ifdef DEBUG
-	printf("GetProcessID -> %d\n", GetProcessId(pi.hProcess));
-	printf("GetThreadID -> %d\n", GetThreadId(pi.hThread));
+		printf("DEBUG INFORMATION.\n");
+		printf("\tGetProcessID -> %d\n", GetProcessId(pi.hProcess));
+		printf("\tGetThreadID -> %d\n", GetThreadId(pi.hThread));
 #endif
+		dwRetVal = WaitForSingleObject(pi.hProcess, SINGLEOBJTIME);
+		if (dwRetVal != WAIT_OBJECT_0) {
+			fprintf(stderr, "Error: WaitForSingleObject failed.\n");
+			switch (dwRetVal) {
+			case WAIT_TIMEOUT:
+				printf("\tRequest timed out\n");
+				break;
+			default:
+				printf("\tExtended error returned (%ld)\n", GetLastError());
+				break;
+			}
+		}
 
-	dwRetVal = WaitForSingleObject(pi.hProcess, SINGLEOBJTIME);
-	CloseHandle(pi.hProcess);
-	CloseHandle(pi.hThread);
-	free(args);
+		if (!CloseHandle(pi.hProcess)) {
+			fprintf(stderr, "Error: Failed to close process handle, eer (%ld)\n", GetLastError());
+		}
 
-	if (dwRetVal != WAIT_OBJECT_0) {
-		fprintf(stderr, "Error: WaitForSingleObject failed.\n");
-		switch (dwRetVal) {
-		case WAIT_TIMEOUT:
-			printf("\tRequest timed out\n");
+		if (!CloseHandle(pi.hThread)) {
+			fprintf(stderr, "Error: Failed to close thread handle, eer (%ld)\n", GetLastError());
+		}
+
+	}
+	else {
+		fprintf(stderr, "Error: Call to CreateProcess failed.\n");
+		dwError = GetLastError();
+		switch (dwError) {
+		case ERROR_FILE_NOT_FOUND:
+			printf("\tEmulator not found\n");
+			break;
+		case ERROR_NOT_ENOUGH_MEMORY:
+			printf("\tThere is not enough memory to create the process\n");
+			break;
+		case ERROR_DLL_NOT_FOUND:
+			printf("\tA required DLL was not found\n");
 			break;
 		default:
 			printf("\tExtended error returned (%ld)\n", GetLastError());
 			break;
 		}
+
+		free(args);
+
 		return -1;
 	}
+
+	free(args);
+
 	return 0;
 }
 
@@ -97,12 +111,14 @@ int PING_INET_ADDR(const char* argv) {
 		fprintf(stderr, "\tError: Unable to open handle.\nIcmpCreatefile errorcode (%ld).\n", GetLastError());
 		return -1;
 	}
-
+	
 	ReplySize = sizeof(ICMP_ECHO_REPLY) + sizeof(SendData) + 8;
 	ReplyBuffer = malloc(ReplySize);
 	if (ReplyBuffer == NULL) {
 		fprintf(stderr, "\tError: Unable to allocate memory for reply buffer.\n");
-		IcmpCloseHandle(hIcmpFile);
+		if (!IcmpCloseHandle(hIcmpFile)) {
+			fprintf(stderr, "Error: Failed to close Icmp File handle, eer (%ld)", GetLastError());
+		}
 		return -1;
 	}
 
@@ -156,11 +172,15 @@ int PING_INET_ADDR(const char* argv) {
 			break;
 		}
 		free(ReplyBuffer);
-		IcmpCloseHandle(hIcmpFile);
+		if (!IcmpCloseHandle(hIcmpFile)) {
+			fprintf(stderr, "Error: Failed to close Icmp File handle, eer (%ld)", GetLastError());
+		}
 		return -1;
 	}
 	free(ReplyBuffer);
-	IcmpCloseHandle(hIcmpFile);
+	if (!IcmpCloseHandle(hIcmpFile)) {
+		fprintf(stderr, "Error: Failed to close Icmp File handle, eer (%ld)", GetLastError());
+	}
 	return 0;
 }
 

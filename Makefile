@@ -30,4 +30,4 @@ $(TARGET): $(OBJS)
 	$(CC) /c $(CFLAGS) $< /Fo$@
 
 clean:
-	del $(OUT_DIR)\*.exe $(OBJS)
+	del $(OUT_DIR)\*.exe $(OBJS) 
