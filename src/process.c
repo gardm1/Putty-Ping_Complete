@@ -1,7 +1,7 @@
 #include "process.h"
 
 int EXECUTE_COMMAND(const char* argv) {
-	LPTSTR args = NULL;
+	//LPTSTR args = NULL;
 	HANDLE hProcess = NULL;
 	HANDLE hThread = NULL;
 	DWORD dwProcessId = 0;
@@ -11,18 +11,20 @@ int EXECUTE_COMMAND(const char* argv) {
 	DWORD dwError = 0;
 
 	// See if utf-16 is even needed or if you can just use ansi strings. 
-	int buffer_size = MultiByteToWideChar(CP_UTF8, 0, argv, -1, NULL, 0);
-	if (buffer_size == 0) {
-		fprintf(stderr, "Error: Getting size for wide string failed.\n");
-		return -1;
-	}
-	WCHAR* buffer = (WCHAR*)malloc(buffer_size * sizeof(WCHAR));
-	MultiByteToWideChar(CP_UTF8, 0, argv, -1, buffer, buffer_size);
-	args = (LPTSTR)buffer;
+	//int buffer_size = MultiByteToWideChar(CP_UTF8, 0, argv, -1, NULL, 0);
+	//if (buffer_size == 0) {
+	//	fprintf(stderr, "Error: Getting size for wide string failed.\n");
+	//	return -1;
+	//}
+	//WCHAR* buffer = (WCHAR*)malloc(buffer_size * sizeof(WCHAR));
+	//MultiByteToWideChar(CP_UTF8, 0, argv, -1, buffer, buffer_size);
+	//args = (LPTSTR)buffer;
 
 	//WCHAR buffer[256];
 	//MultiByteToWideChar(CP_UTF8, 0, argv, -1, buffer, sizeof(buffer) / sizeof(WCHAR));
 	//args = (LPTSTR)buffer;
+
+	// Conclusion: We're using ANSI strings 
 
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
@@ -31,7 +33,7 @@ int EXECUTE_COMMAND(const char* argv) {
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
 
-	bRetVal = CreateProcess(NULL, args, NULL, NULL,
+	bRetVal = CreateProcessA(NULL, (LPSTR)argv, NULL, NULL,
 		FALSE, 0, NULL, NULL,
 		&si, &pi);
 
@@ -39,7 +41,7 @@ int EXECUTE_COMMAND(const char* argv) {
 #ifdef DEBUG
 		printf("DEBUG INFORMATION.\n");
 		printf("\tGetProcessID -> %d\n", GetProcessId(pi.hProcess));
-		printf("\tGetThreadID -> %d\n", GetThreadId(pi.hThread));
+		printf("\tGetThreadID -> %d\nEND.\n", GetThreadId(pi.hThread));
 #endif
 		dwRetVal = WaitForSingleObject(pi.hProcess, SINGLEOBJTIME);
 		if (dwRetVal != WAIT_OBJECT_0) {
@@ -81,12 +83,12 @@ int EXECUTE_COMMAND(const char* argv) {
 			break;
 		}
 
-		free(args);
+		//free(args);
 
 		return -1;
 	}
 
-	free(args);
+	//free(args);
 
 	return 0;
 }

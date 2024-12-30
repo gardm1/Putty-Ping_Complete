@@ -33,7 +33,9 @@ bld/
 [Ll]og/
 [Ll]ogs/
 old_c_src/
-temper/
+src/process.dll
+src/process.lib
+src/process.exp
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
