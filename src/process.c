@@ -2,6 +2,7 @@
 
 int EXECUTE_COMMAND(const char* argv) {
 	//LPTSTR args = NULL;
+	LPSTR args = (LPSTR)argv;
 	HANDLE hProcess = NULL;
 	HANDLE hThread = NULL;
 	DWORD dwProcessId = 0;
@@ -33,7 +34,7 @@ int EXECUTE_COMMAND(const char* argv) {
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
 
-	bRetVal = CreateProcessA(NULL, (LPSTR)argv, NULL, NULL,
+	bRetVal = CreateProcessA(NULL, args, NULL, NULL,
 		FALSE, 0, NULL, NULL,
 		&si, &pi);
 

@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
+    <None Include="src\main.go" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\process.h">
