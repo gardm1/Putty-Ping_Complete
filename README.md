@@ -10,11 +10,13 @@ Not finished
 - [x] Convert code to c code <br />
 - [x] Add libgcrypt encryption <br />
 - [x] Simplify <br />
-- [ ] Embed the c code in go (need to rewrite in gcc, cgo hates cl) <br />
+- [ ] ~~Embed the c code in go (need to rewrite in gcc, cgo hates cl)~~ <br />
+- [ ] Redo the makefile to compile (cl) all files into dlls, lazy load them in golang <br />
 - [ ] Add go data handler, scrap the c version <br />
 - [ ] Add CLI built in go (Cobra/Bonzai) <br />
 - [ ] Add rsa to handle AES key encryption <br />
 - [ ] Simplify again and clean up <br />
+- [ ] See if you can do something cool with go-crypto, clean up again <br />
 
 ### Libgcrypt (gcrypt.h & gpg-error.h) installation guide for x64
 
