@@ -1,5 +1,4 @@
 CC = cl
-LD = link
 
 CFLAGS = /LD /Gz /Fo:src/
 
@@ -7,9 +6,9 @@ LIBS = ws2_32.lib iphlpapi.lib
 
 SRC = src\process.c
 
-OUT = src\process.dll
+OUT = bin\process.dll
 
-OUTPUTS = src\process.dll src\process.obj
+OUTPUTS = bin\process.dll src\process.obj
 
 all: $(OUT)
 

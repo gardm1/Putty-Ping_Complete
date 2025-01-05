@@ -15,10 +15,8 @@
 #include <icmpapi.h>
 #endif
 
-// https://www.digitalocean.com/community/tutorials/calling-c-functions-from-python
-
-//#define RELEASE
-#define DEBUG
+#define RELEASE
+//#define DEBUG
 
 #define ICMPTIME 5000
 #define SINGLEOBJTIME 3000

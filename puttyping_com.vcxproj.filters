@@ -31,11 +31,11 @@
     <Filter Include="libgcrypt\hmac">
       <UniqueIdentifier>{6d1acb20-d248-48da-97b5-37efe3a31ea1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dll loader">
+      <UniqueIdentifier>{cc7caf9c-b353-44f7-8918-3345ff587338}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\puttyping.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\process.c">
       <Filter>Process</Filter>
     </ClCompile>
@@ -54,7 +54,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
-    <None Include="src\main.go" />
+    <None Include="src\main.go">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="src\dll_loader.go">
+      <Filter>dll loader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\process.h">

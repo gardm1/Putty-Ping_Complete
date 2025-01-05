@@ -95,13 +95,13 @@
   <ItemGroup>
     <ClCompile Include="src\libgcrypt_crypto.c" />
     <ClCompile Include="src\process.c" />
-    <ClCompile Include="src\puttyping.c" />
     <ClCompile Include="src\util\encryption.c" />
     <ClCompile Include="src\util\hmac.c" />
     <ClCompile Include="src\util\rsa.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
+    <None Include="src\dll_loader.go" />
     <None Include="src\main.go" />
   </ItemGroup>
   <ItemGroup>
