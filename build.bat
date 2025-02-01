@@ -24,6 +24,16 @@ if "%input%" equ "all" (
 echo - Building c files.
 nmake >nul 2>&1
 
+cl /c src\process.c /link ws2_32.lib iphlpapi.lib
+lib /out:process.lib process.obj
+
+cl /LD src\toolbox.c libgcrypt_crypto.lib process.lib /I"lib\libgcrypt\include" /link lib\libgcrypt\lib-libgcrypt-1.11.0-ucrt64-gcc\libgcrypt-20.lib lib\libgcrypt\lib-libgcrypt-1.11.0-ucrt64-gcc\libgpg-error-0.lib
+
+move libgcrypt_crypto.* src\
+move process.* src\
+move toolbox.dll bin\
+move toolbox.* src\
+
 if %errorlevel% neq 0 (
 	echo Building c files failed...
 	echo Build [failed]. Exiting.

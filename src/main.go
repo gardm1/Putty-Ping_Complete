@@ -23,15 +23,12 @@ func UnloadDLL_m(loader *dll_loader.DLLLoader) {
 }
 
 func main() {
-	// cl /LD /Gz process.c /link ws2_32.lib iphlpapi.lib /OUT:process.dll
-	// Createprocess needs to take ansi strings --> changed to CreateProcessA, passing in LPSTR, not LPTSTR
-
 	loader := &dll_loader.DLLLoader{}
-	err := loader.LoadDLL("process.dll")
+	err := loader.LoadDLL("toolbox.dll")
 	if err != nil {
-		log.Fatalf("Error executing command: %v", err)
+		log.Fatalf("Loading DLL failed: %v", err)
 	}
-
+	
 	command := getMemAddress(stringToCString("calc.exe"))
 	err = loader.ExecuteCommand(command)
 	if err != nil {
@@ -39,12 +36,32 @@ func main() {
 		log.Fatalf("Error executing command: %v", err)
 	}
 
+	
 	ip := getMemAddress(stringToCString("1.1.1.1"))
 	err = loader.PingInetAddr(ip)
 	if err != nil {
 		UnloadDLL_m(loader)
 		log.Fatalf("Error pinging InetAddr: %v", err)
 	}
+
+	input_file_path := getMemAddress(stringToCString("bin\\test.txt"))
+	output_file_path := getMemAddress(stringToCString("bin\\en_test.txt"))
+	decrypted_file_path := getMemAddress(stringToCString("bin\\de_test.txt"))
+	key_file_path := getMemAddress(stringToCString("bin\\_key_"))
+
+	err = loader.EncryptFile(input_file_path, output_file_path, key_file_path)
+	if err != nil {
+		UnloadDLL_m(loader)
+		log.Fatalf("Error encrypting file: %v", err)
+	}
+	
+
+	err = loader.DecryptFile(output_file_path, decrypted_file_path, key_file_path)
+	if err != nil {
+		UnloadDLL_m(loader)
+		log.Fatalf("Error decrypting file: %v", err)
+	}
+	
 
 	UnloadDLL_m(loader)
 }

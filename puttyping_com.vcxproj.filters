@@ -34,6 +34,12 @@
     <Filter Include="dll loader">
       <UniqueIdentifier>{cc7caf9c-b353-44f7-8918-3345ff587338}</UniqueIdentifier>
     </Filter>
+    <Filter Include="root">
+      <UniqueIdentifier>{5f1145fa-46d9-4140-bb7d-31853573e135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dll_wrapper">
+      <UniqueIdentifier>{3416baff-9212-4f35-985c-b4eb119c31b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\process.c">
@@ -51,14 +57,22 @@
     <ClCompile Include="src\util\rsa.c">
       <Filter>libgcrypt\rsa</Filter>
     </ClCompile>
+    <ClCompile Include="src\dll_wrapper.c">
+      <Filter>dll_wrapper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Makefile" />
     <None Include="src\main.go">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="src\dll_loader.go">
+    <None Include="src\dll_loader\dll_loader.go">
       <Filter>dll loader</Filter>
+    </None>
+    <None Include="Makefile">
+      <Filter>root</Filter>
+    </None>
+    <None Include="build.bat">
+      <Filter>root</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

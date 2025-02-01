@@ -93,6 +93,7 @@
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\dll_wrapper.c" />
     <ClCompile Include="src\libgcrypt_crypto.c" />
     <ClCompile Include="src\process.c" />
     <ClCompile Include="src\util\encryption.c" />
@@ -100,8 +101,9 @@
     <ClCompile Include="src\util\rsa.c" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="build.bat" />
     <None Include="Makefile" />
-    <None Include="src\dll_loader.go" />
+    <None Include="src\dll_loader\dll_loader.go" />
     <None Include="src\main.go" />
   </ItemGroup>
   <ItemGroup>
