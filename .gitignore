@@ -36,6 +36,10 @@ old_c_src/
 src/process.dll
 src/process.lib
 src/process.exp
+src/toolbox.exp
+src/toolbox.lib
+src/libgcrypt_crypto.dll
+src/libgcrypt_crypto.lib
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

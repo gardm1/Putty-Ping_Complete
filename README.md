@@ -11,7 +11,8 @@ Not finished
 - [x] Add libgcrypt encryption <br />
 - [x] Simplify <br />
 - [ ] ~~Embed the c code in go (need to rewrite in gcc, cgo hates cl)~~ <br />
-- [ ] Redo the makefile to compile (cl) all files into dlls, lazy load them in golang <br />
+- [x] Redo the makefile to compile (cl) all files into dlls, lazy load them in golang <br />
+- [ ] Clean up build process <br />
 - [ ] Add go data handler, scrap the c version <br />
 - [ ] Add CLI built in go (Cobra/Bonzai) <br />
 - [ ] Add rsa to handle AES key encryption <br />
