@@ -2,12 +2,23 @@ package dll_loader
 
 import (
 	"syscall"
+	"unsafe"
 	"fmt"
+	"log"
 )
+
+func stringToCString(s string) *byte {
+	b := append([]byte(s), 0)
+	return &b[0]
+}
+
+func getMemAddress(b *byte) uintptr {
+	return uintptr(unsafe.Pointer(b))
+}
 
 type DLLLoader struct {
 	dll					*syscall.DLL
-	executeCommandProc  *syscall.Proc
+	executeCommandProc	*syscall.Proc
 	pingInetAddrProc	*syscall.Proc
 	encryptFileProc		*syscall.Proc
 	decryptFileProc		*syscall.Proc
@@ -40,16 +51,17 @@ func (loader *DLLLoader) LoadDLL(dllPath string) error {
 		return fmt.Errorf("Failed to find DECRYPT_FILE in %s: %w", dllPath, err)
 	}
 
-
 	return nil
 }
 
-func (loader *DLLLoader) ExecuteCommand(argv uintptr) error {
+func (loader *DLLLoader) ExecuteCommand(argv string) error {
 	if loader.executeCommandProc == nil {
 		return fmt.Errorf("EXECUTE_COMMAND procedure is not loaded")
 	}
 
-	ret, _, err := loader.executeCommandProc.Call(argv)
+	var c_argv uintptr = getMemAddress(stringToCString(argv))
+
+	ret, _, err := loader.executeCommandProc.Call(c_argv)
 
 	if ret == 0 {
 		return nil
@@ -58,12 +70,14 @@ func (loader *DLLLoader) ExecuteCommand(argv uintptr) error {
 	return err
 }
 
-func (loader *DLLLoader) PingInetAddr(argv uintptr) error {
+func (loader *DLLLoader) PingInetAddr(argv string) error {
 	if loader.pingInetAddrProc == nil {
 		return fmt.Errorf("PING_INET_ADDR procedure is not loaded")
 	}
 
-	ret, _, err := loader.pingInetAddrProc.Call(argv)
+	var c_argv uintptr = getMemAddress(stringToCString(argv))
+
+	ret, _, err := loader.pingInetAddrProc.Call(c_argv)
 
 	if ret == 0 {
 		return nil
@@ -72,12 +86,16 @@ func (loader *DLLLoader) PingInetAddr(argv uintptr) error {
 	return err
 }
 
-func (loader *DLLLoader) EncryptFile(ifp uintptr, ofp uintptr, kfp uintptr) error {
+func (loader *DLLLoader) EncryptFile(input_file_path string, output_file_path string, key_file_path string) error {
 	if loader.encryptFileProc == nil {
 		return fmt.Errorf("ENCRYPT_FILE procedure is not loaded")
 	}
 
-	ret, _, err := loader.encryptFileProc.Call(ifp, ofp, kfp)
+	var c_input_file_path uintptr = getMemAddress(stringToCString(input_file_path))
+	var c_output_file_path uintptr = getMemAddress(stringToCString(output_file_path))
+	var c_key_file_path uintptr = getMemAddress(stringToCString(key_file_path))
+
+	ret, _, err := loader.encryptFileProc.Call(c_input_file_path, c_output_file_path, c_key_file_path)
 
 	if ret == 0 {
 		return nil
@@ -86,12 +104,16 @@ func (loader *DLLLoader) EncryptFile(ifp uintptr, ofp uintptr, kfp uintptr) erro
 	return err
 }
 
-func (loader *DLLLoader) DecryptFile(ifp uintptr, ofp uintptr, kfp uintptr) error {
+func (loader *DLLLoader) DecryptFile(input_file_path string, output_file_path string, key_file_path string) error {
 	if loader.decryptFileProc == nil {
 		return fmt.Errorf("DECRYPT_FILE procedure is not loaded")
 	}
 
-	ret, _, err := loader.decryptFileProc.Call(ifp, ofp, kfp)
+	var c_input_file_path uintptr = getMemAddress(stringToCString(input_file_path))
+	var c_output_file_path uintptr = getMemAddress(stringToCString(output_file_path))
+	var c_key_file_path uintptr = getMemAddress(stringToCString(key_file_path))
+
+	ret, _, err := loader.decryptFileProc.Call(c_input_file_path, c_output_file_path, c_key_file_path)
 
 	if ret == 0 {
 		return nil
@@ -100,10 +122,13 @@ func (loader *DLLLoader) DecryptFile(ifp uintptr, ofp uintptr, kfp uintptr) erro
 	return err
 }
 
-func (loader *DLLLoader) UnloadDLL() error {
+func (loader *DLLLoader) UnloadDLL() {
+	var err error
 	if loader.dll != nil {
-		return loader.dll.Release()
+		err = loader.dll.Release()
 	}
 
-	return nil
+	if err != nil {
+		log.Fatalf("Error unloading DLL: %v", err)
+	}
 }

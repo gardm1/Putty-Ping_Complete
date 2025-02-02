@@ -24,11 +24,6 @@ if "%input%" equ "all" (
 echo - Building c files.
 nmake >nul 2>&1
 
-cl /c src\process.c /link ws2_32.lib iphlpapi.lib
-lib /out:process.lib process.obj
-
-cl /LD src\toolbox.c libgcrypt_crypto.lib process.lib /I"lib\libgcrypt\include" /link lib\libgcrypt\lib-libgcrypt-1.11.0-ucrt64-gcc\libgcrypt-20.lib lib\libgcrypt\lib-libgcrypt-1.11.0-ucrt64-gcc\libgpg-error-0.lib
-
 move libgcrypt_crypto.* src\
 move process.* src\
 move toolbox.dll bin\
@@ -51,6 +46,7 @@ if "%input%" equ "all" (
 
 :labelb
 echo - Building go files.
+REM Change name later --> puttyping.exe
 go build -o bin\main.exe src\main.go
 
 if %errorlevel% neq 0 (
@@ -71,7 +67,8 @@ if "%input%" equ "all" (
 goto :end
 
 :labelc
-echo Removing bin\main.exe, bin\process.dll, src\*.obj
+echo Removing bin\main.exe, bin\toolbox.dll, src\*.obj
+echo          src\*.dll,    src\*.lib,       src\*.exp
 nmake clean
 echo         del bin\main.exe
 del "bin\main.exe"

@@ -1,33 +1,27 @@
-# Compiler and linker settings
 CC=cl
 CFLAGS=/LD /I"lib\libgcrypt\include" /nologo
-LDFLAGS=lib\libgcrypt\lib-libgcrypt-1.11.0-ucrt64-gcc\libgcrypt-20.lib \
+LDFLAGS=/link lib\libgcrypt\lib-libgcrypt-1.11.0-ucrt64-gcc\libgcrypt-20.lib \
         lib\libgcrypt\lib-libgcrypt-1.11.0-ucrt64-gcc\libgpg-error-0.lib
 
-# Output DLL name
 TARGET=libgcrypt_crypto.dll
 
-# Source files
 SRCS=src\libgcrypt_crypto.c \
      src\util\encryption.c \
      src\util\hmac.c \
 
-# Object files (corresponding to source files)
 OBJS=$(SRCS:.c=.obj)
 
-# Default rule
 all: $(TARGET)
 
-#	lib /out:libgcrypt_crypto.lib $(OBJS)
-# Rule to build the DLL
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) /link $(LDFLAGS) /Fe$@
+	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) /Fe$@
 	lib /out:libgcrypt_crypto.lib $(OBJS)
+	cl /c src\process.c /link ws2_32.lib iphlpapi.lib
+	lib /out:process.lib process.obj
+	cl $(CFLAGS) src\toolbox.c libgcrypt_crypto.lib process.lib $(LDFLAGS)
 
-# Rule to build object files
 .c.obj:
 	$(CC) $(CFLAGS) /c $< /Fo$@
 
-# Clean rule
 clean:
-	del /q $(OBJS) $(TARGET)
+	del src\*.obj src\*.dll src\*.lib src\*.exp bin\toolbox.dll
