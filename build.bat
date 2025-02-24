@@ -26,6 +26,8 @@ nmake >nul 2>&1
 
 move libgcrypt_crypto.* src\
 move process.* src\
+move hmac.* src\util\
+move encryption.* src\util\
 move toolbox.dll bin\
 move toolbox.* src\
 

@@ -6,8 +6,10 @@ import (
 )
 
 func main() {
+	var err error
 	loader := &dll_loader.DLLLoader{}
-	err := loader.LoadDLL("toolbox.dll")
+
+	err = loader.LoadDLL("toolbox.dll")
 	if err != nil {
 		log.Fatalf("Loading DLL failed: %v", err)
 	}

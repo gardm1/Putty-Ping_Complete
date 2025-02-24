@@ -31,22 +31,22 @@ func (loader *DLLLoader) LoadDLL(dllPath string) error {
 		return fmt.Errorf("Failed to load DLL %s: %w", dllPath, err)
 	}
 
-	loader.executeCommandProc, err = loader.dll.FindProc("_dll_EXECUTE_COMMAND")
+	loader.executeCommandProc, err = loader.dll.FindProc("EXECUTE_COMMAND")
 	if err != nil {
 		return fmt.Errorf("Failed to find EXECUTE_COMMAND in %s: %w", dllPath, err)
 	}
 
-	loader.pingInetAddrProc, err = loader.dll.FindProc("_dll_PING_INET_ADDR")
+	loader.pingInetAddrProc, err = loader.dll.FindProc("PING_INET_ADDR")
 	if err != nil {
 		return fmt.Errorf("Failed to find PING_INET_ADDR in %s: %w", dllPath, err)
 	}
 
-	loader.encryptFileProc, err = loader.dll.FindProc("_dll_ENCRYPT_FILE")
+	loader.encryptFileProc, err = loader.dll.FindProc("ENCRYPT_FILE")
 	if err != nil {
 		return fmt.Errorf("Failed to find ENCRYPT_FILE in %s: %w", dllPath, err)
 	}
 
-	loader.decryptFileProc, err = loader.dll.FindProc("_dll_DECRYPT_FILE")
+	loader.decryptFileProc, err = loader.dll.FindProc("DECRYPT_FILE")
 	if err != nil {
 		return fmt.Errorf("Failed to find DECRYPT_FILE in %s: %w", dllPath, err)
 	}
