@@ -37,9 +37,6 @@
     <Filter Include="root">
       <UniqueIdentifier>{5f1145fa-46d9-4140-bb7d-31853573e135}</UniqueIdentifier>
     </Filter>
-    <Filter Include="dll wrapper %28toolbox%29">
-      <UniqueIdentifier>{3416baff-9212-4f35-985c-b4eb119c31b0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\process.c">
@@ -56,9 +53,6 @@
     </ClCompile>
     <ClCompile Include="src\util\rsa.c">
       <Filter>libgcrypt\rsa</Filter>
-    </ClCompile>
-    <ClCompile Include="src\toolbox.c">
-      <Filter>dll wrapper %28toolbox%29</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

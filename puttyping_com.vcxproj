@@ -93,7 +93,6 @@
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\toolbox.c" />
     <ClCompile Include="src\libgcrypt_crypto.c" />
     <ClCompile Include="src\process.c" />
     <ClCompile Include="src\util\encryption.c" />
