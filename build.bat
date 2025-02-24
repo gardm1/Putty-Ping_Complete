@@ -49,7 +49,7 @@ if "%input%" equ "all" (
 :labelb
 echo - Building go files.
 REM Change name later --> puttyping.exe
-go build -o bin\main.exe src\main.go
+go build -o bin\pping.exe src\main.go
 
 if %errorlevel% neq 0 (
 	echo Building go files failed...
@@ -69,11 +69,11 @@ if "%input%" equ "all" (
 goto :end
 
 :labelc
-echo Removing bin\main.exe, bin\toolbox.dll, src\*.obj
+echo Removing bin\pping.exe, bin\toolbox.dll, src\*.obj
 echo          src\*.dll,    src\*.lib,       src\*.exp
 nmake clean
-echo         del bin\main.exe
-del "bin\main.exe"
+echo         del bin\pping.exe
+del "bin\pping.exe"
 
 goto :end
 

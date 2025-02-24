@@ -3,8 +3,6 @@ package main
 import (
     "fmt"
     "log"
-    "os"
-    "path/filepath"
 
     "github.com/spf13/cobra"
     "puttyping/src/dll_loader"
@@ -13,15 +11,8 @@ import (
 var loader = &dll_loader.DLLLoader{}
 
 func init() {
-    exePath, err := os.Executable()
-    if err != nil {
-        log.Fatalf("Failed to get executable path: %v", err)
-    }
-    exeDir := filepath.Dir(exePath)
-    dllPath := filepath.Join(exeDir, "\\", "toolbox.dll")
-
-    if err := loader.LoadDLL(dllPath); err != nil {
-        log.Fatalf("Failed to load DLL from %s: %v", dllPath, err)
+    if err := loader.LoadDLL("toolbox.dll"); err != nil {
+        log.Fatalf("Failed to load DLL: %v", err)
     }
 }
 
